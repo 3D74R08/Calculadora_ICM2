@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de IMC</title>
+    <link rel="shortcut icon" href="/Calculadora Imc/imgs/imc.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container py-5">
+        <div class="card animate-fade-in">
+            <div class="card-header">
+                Calculadora de IMC
+                <button class="help-btn" id="helpButton">
+                    <i class="fas fa-question"></i>
+                </button>
+            </div>
+            <div class="card-body p-4">
+                <div id="imcForm">
+                    <div class="mb-4">
+                        <div class="icon-container">
+                            <i class="fas fa-weight"></i>
+                        </div>
+                        <div class="input-group-desktop">
+                            <div class="form-group">
+                                <label for="weight" class="form-label">Peso (kg)</label>
+                                <input type="number" class="form-control" id="weight" placeholder="Ej: 70">
+                                <div class="invalid-feedback">
+                                    Por favor, ingresa un peso válido
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="height" class="form-label">Altura (cm)</label>
+                                <input type="number" class="form-control" id="height" placeholder="Ej: 170">
+                                <div class="invalid-feedback">
+                                    Por favor, ingresa una altura válida
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-calculate btn-primary" id="calculateButton">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Calcular IMC
+                    </button>
+                </div>
+                
+                <div id="resultContainer" class="result-container">
+                    <h2 class="mb-3">Tu Índice de Masa Corporal</h2>
+                    <div class="result-value" id="imcValue">25.4</div>
+                    <div class="result-category category-normal" id="imcCategory">Peso Normal</div>
+                    
+                    <button class="btn btn-reset" id="resetButton">
+                        Nuevo Cálculo
+                    </button>
+                    
+                    <div class="history-container mt-4">
+                        <h4>Historial de Cálculos</h4>
+                        <ul class="history-list" id="historyList">
+                            <!-- Historial se llenará dinámicamente -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Ayuda -->
+    <div class="modal fade" id="helpModal" tabindex="-1" aria-labelledby="helpModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">Cómo utilizar la calculadora de IMC</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="help-step">
+                        <div class="help-step-title">¿Qué es el IMC?</div>
+                        <p>El Índice de Masa Corporal (IMC) es una medida que relaciona el peso y la altura para evaluar si una persona tiene un peso saludable.</p>
+                    </div>
+                    
+                    <div class="help-step">
+                        <div class="help-step-title">Paso 1: Ingresa tu peso</div>
+                        <p>Ingresa tu peso en kilogramos (kg) en el primer campo. Para obtener una medida precisa, pésate por la mañana después de ir al baño y antes de desayunar.</p>
+                        <img src="/Calculadora Imc/imgs/control_de_peso.png" alt="Medición de peso" class="help-illustration">
+                    </div>
+                    
+                    <div class="help-step">
+                        <div class="help-step-title">Paso 2: Ingresa tu altura</div>
+                        <p>Ingresa tu altura en centímetros (cm) en el segundo campo. Mide tu altura sin zapatos, con los pies juntos y la espalda recta contra una pared.</p>
+                        <img src="/Calculadora Imc/imgs/escala_de_altura.png" alt="Medición de altura" class="help-illustration">
+                    </div>
+                    
+                    <div class="help-step">
+                        <div class="help-step-title">Paso 3: Calcula tu IMC</div>
+                        <p>Haz clic en el botón "Calcular IMC" y obtendrás tu índice de masa corporal junto con la categoría en la que te encuentras.</p>
+                    </div>
+                    
+                    <div class="help-step">
+                        <div class="help-step-title">Interpretación de resultados</div>
+                        <ul>
+                            <li><strong>Bajo peso</strong>: IMC menor a 18.5</li>
+                            <li><strong>Peso normal</strong>: IMC entre 18.5 y 24.9</li>
+                            <li><strong>Sobrepeso</strong>: IMC entre 25.0 y 29.9</li>
+                            <li><strong>Obesidad</strong>: IMC de 30.0 o más</li>
+                        </ul>
+                        <p class="text-muted mt-2"><small>Nota: El IMC es una herramienta de orientación y no tiene en cuenta factores como la composición corporal. Consulta a un profesional de la salud para una evaluación completa.</small></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Entendido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/es.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
